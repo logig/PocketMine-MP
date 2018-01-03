@@ -27,7 +27,6 @@ namespace pocketmine\network\mcpe\protocol;
 
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Entity;
-use pocketmine\item\ItemFactory;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\types\CommandOriginData;
@@ -180,23 +179,18 @@ abstract class DataPacket extends BinaryStream{
 					$value = $this->getString();
 					break;
 				case Entity::DATA_TYPE_SLOT:
-					//TODO: use objects directly
-					$value = [];
-					$item = $this->getSlot();
-					$value[0] = $item->getId();
-					$value[1] = $item->getCount();
-					$value[2] = $item->getDamage();
+					$value = $this->getSlot();
 					break;
 				case Entity::DATA_TYPE_POS:
-					$value = [0, 0, 0];
-					$this->getSignedBlockPosition(...$value);
+					$pos = [0, 0, 0];
+					$this->getSignedBlockPosition(...$pos);
+					$value = new Vector3(...$pos);
 					break;
 				case Entity::DATA_TYPE_LONG:
 					$value = $this->getVarLong();
 					break;
 				case Entity::DATA_TYPE_VECTOR3F:
-					$value = [0.0, 0.0, 0.0];
-					$this->getVector3f(...$value);
+					$value = $this->getVector3Obj();
 					break;
 				default:
 					$value = [];
@@ -238,19 +232,21 @@ abstract class DataPacket extends BinaryStream{
 					$this->putString($d[1]);
 					break;
 				case Entity::DATA_TYPE_SLOT:
-					//TODO: change this implementation (use objects)
-					$this->putSlot(ItemFactory::get($d[1][0], $d[1][2], $d[1][1])); //ID, damage, count
+					$this->putSlot($d[1]);
 					break;
 				case Entity::DATA_TYPE_POS:
-					//TODO: change this implementation (use objects)
-					$this->putSignedBlockPosition(...$d[1]);
+					$v = $d[1];
+					if($v !== null){
+						$this->putSignedBlockPosition($v->x, $v->y, $v->z);
+					}else{
+						$this->putSignedBlockPosition(0, 0, 0);
+					}
 					break;
 				case Entity::DATA_TYPE_LONG:
 					$this->putVarLong($d[1]);
 					break;
 				case Entity::DATA_TYPE_VECTOR3F:
-					//TODO: change this implementation (use objects)
-					$this->putVector3f(...$d[1]); //x, y, z
+					$this->putVector3ObjNullable($d[1]);
 			}
 		}
 	}
