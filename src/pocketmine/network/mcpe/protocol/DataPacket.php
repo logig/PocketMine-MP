@@ -182,9 +182,8 @@ abstract class DataPacket extends BinaryStream{
 					$value = $this->getSlot();
 					break;
 				case Entity::DATA_TYPE_POS:
-					$pos = [0, 0, 0];
-					$this->getSignedBlockPosition(...$pos);
-					$value = new Vector3(...$pos);
+					$value = new Vector3();
+					$this->getSignedBlockPosition($value->x, $value->y, $value->z);
 					break;
 				case Entity::DATA_TYPE_LONG:
 					$value = $this->getVarLong();
