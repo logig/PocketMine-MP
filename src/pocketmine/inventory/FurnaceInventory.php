@@ -48,7 +48,6 @@ class FurnaceInventory extends ContainerInventory{
 	}
 
 	/**
-	 * This override is here for documentation and code completion purposes only.
 	 * @return Furnace
 	 */
 	public function getHolder(){

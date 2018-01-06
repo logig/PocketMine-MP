@@ -56,7 +56,6 @@ class ChestInventory extends ContainerInventory{
 	}
 
 	/**
-	 * This override is here for documentation and code completion purposes only.
 	 * @return Chest
 	 */
 	public function getHolder(){

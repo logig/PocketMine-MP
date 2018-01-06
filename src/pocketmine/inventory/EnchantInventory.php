@@ -28,12 +28,11 @@ use pocketmine\network\mcpe\protocol\types\WindowTypes;
 use pocketmine\Player;
 
 class EnchantInventory extends ContainerInventory{
-
-	/** @var FakeBlockMenu */
+	/** @var Position */
 	protected $holder;
 
 	public function __construct(Position $pos){
-		parent::__construct(new FakeBlockMenu($this, $pos));
+		parent::__construct($pos);
 	}
 
 	public function getNetworkType() : int{
@@ -49,8 +48,7 @@ class EnchantInventory extends ContainerInventory{
 	}
 
 	/**
-	 * This override is here for documentation and code completion purposes only.
-	 * @return FakeBlockMenu
+	 * @return Position
 	 */
 	public function getHolder(){
 		return $this->holder;

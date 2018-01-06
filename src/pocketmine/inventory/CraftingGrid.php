@@ -23,13 +23,8 @@ declare(strict_types=1);
 
 namespace pocketmine\inventory;
 
-use pocketmine\Player;
 
 class CraftingGrid extends BaseInventory{
-
-	public function __construct(Player $holder){
-		parent::__construct($holder);
-	}
 
 	public function getGridWidth() : int{
 		return 2;

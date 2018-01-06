@@ -3672,10 +3672,10 @@ class Player extends Human implements CommandSender, ChunkLoader, IPlayer{
 	protected function addDefaultWindows(){
 		$this->addWindow($this->getInventory(), ContainerIds::INVENTORY, true);
 
-		$this->cursorInventory = new PlayerCursorInventory($this);
+		$this->cursorInventory = new PlayerCursorInventory();
 		$this->addWindow($this->cursorInventory, ContainerIds::CURSOR, true);
 
-		$this->craftingGrid = new CraftingGrid($this);
+		$this->craftingGrid = new CraftingGrid();
 
 		//TODO: more windows
 	}
@@ -3707,7 +3707,7 @@ class Player extends Human implements CommandSender, ChunkLoader, IPlayer{
 		}
 
 		if($this->craftingGrid instanceof BigCraftingGrid){
-			$this->craftingGrid = new CraftingGrid($this);
+			$this->craftingGrid = new CraftingGrid();
 		}
 	}
 
